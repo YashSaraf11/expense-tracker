@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:expense_recreate/add_expense.dart';
+import 'package:hover_effect/hover_effect.dart';
 import 'model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -31,7 +32,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Expense newExpense;
   String _chosenValue;
   List<Expense> expenses = [];
-  // Map<DateTime, List<Expense>> detailed;
 
   Map<String, IconData> icons = <String, IconData>{
     'Coffee': FontAwesomeIcons.coffee,
@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     'Friend': FontAwesomeIcons.userFriends,
   };
 
-  //Making the application fullscreen
+  // Making the application fullscreen
   void dispose() {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     super.dispose();
@@ -133,54 +133,67 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 20,
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(40, 50, 40, 50),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "\$",
-                          style: TextStyle(
-                            letterSpacing: 2.0,
-                            color: Colors.white,
-                            fontSize: 30,
+                height: 150,
+                width: 350,
+                child: HoverCard(
+                  depthColor: Colors.black,
+                  depth: 15,
+                  builder: (context, hovering) {
+                    return Container(
+                      padding: EdgeInsets.fromLTRB(40, 50, 40, 50),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "\$",
+                                style: TextStyle(
+                                  letterSpacing: 2.0,
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
+                                child: Text(
+                                  totalAmount.toString(),
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    color: Colors.white,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                          child: Text(
-                            totalAmount.toString(),
+                          Text(
+                            "USD",
                             style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
+                              letterSpacing: 2.0,
+                              color: Colors.grey,
+                              fontSize: 20,
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                    Text(
-                      "USD",
-                      style: TextStyle(
-                        letterSpacing: 2.0,
-                        color: Colors.grey,
-                        fontSize: 20,
+                        ],
                       ),
-                    ),
-                  ],
+                      // decoration: BoxDecoration(
+                      //   borderRadius: BorderRadius.circular(40),
+                      //   color: Colors.black,
+                      //   boxShadow: [
+                      //     BoxShadow(
+                      //       blurRadius: 1.0, // soften the shadow
+                      //       spreadRadius: 1.5, //extend the shadow
+                      //     )
+                      //   ],
+                      // ),
+                    );
+                  },
                 ),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
-                  color: Colors.black45,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 1.0, // soften the shadow
-                      spreadRadius: 1.5, //extend the shadow
-                    )
-                  ],
+                  borderRadius: BorderRadius.circular(100),
                 ),
               ),
               SizedBox(
@@ -195,10 +208,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
               //ListView Generation
               ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: expenses.length,
+                itemCount: expenses?.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return SingleChildScrollView(

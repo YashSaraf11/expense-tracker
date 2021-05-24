@@ -206,7 +206,8 @@ class _AddExpenseState extends State<AddExpense> {
                           new Expense(
                               amount: double.parse(amountController?.text),
                               type: _chosenValue,
-                              description: descriptionController.text));
+                              description: descriptionController.text,
+                              dateTime: DateTime.now()));
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
